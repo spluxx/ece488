@@ -1,3 +1,4 @@
 activate.sh
 *.ipynb_checkpoints
 venv
+__pycache__/
