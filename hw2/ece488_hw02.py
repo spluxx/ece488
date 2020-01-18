@@ -11,4 +11,4 @@ def capture(fcn, T, D, g, t_0=0):
 	lux = np.array(list(map(fcn, t)))
 	energy = np.trapz(lux, t)*area/lumens_per_watt
 	voltage = sqrt(2*energy/capacitance)
-	return floor(g * voltage)
+	return max(min(floor(g * voltage), 255), 0)
