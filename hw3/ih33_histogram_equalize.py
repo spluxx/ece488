@@ -3,7 +3,7 @@ import math
 
 def ih33_histogram_equalize(img):
 	L = 256
-	numPixels = len(img)*len(img[0])
+	numPixels = img.size
 
 	hist, _ = np.histogram(img, bins=L, range=(0,L))
 	pn = hist/numPixels
