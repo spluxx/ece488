@@ -2,3 +2,4 @@ activate.sh
 *.ipynb_checkpoints
 venv
 __pycache__/
+.DS_Store
