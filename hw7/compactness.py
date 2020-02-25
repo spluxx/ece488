@@ -71,55 +71,74 @@ def dropLowest(img, percentile):
   return np.vectorize(drop)(img)
  
 if __name__ == '__main__':
+  res = []
   for idx in range(10):
+    print("{}/{}".format(idx, 10))
     img = read_img(idx)
     pimg = preprocess(img)
-    print("img {}".format(idx+1))
-    print("standard: {}".format(compactness(img)))
-    print("fft: {}".format(compactness(fft(pimg))))
-    print("dwt: {}".format(compactness(dwt2(pimg))))
+    res.append([
+        compactness(img),
+        compactness(fft(pimg)),
+        compactness(dwt2(pimg))
+    ])
+
+  def print_header():
+    print("std|fft|dwt2")
+
+  def print_row(r):
+    fmt = list(map(lambda x: "{0:.6f}".format(x), r))
+    print("{}|{}|{}".format(*fmt))
+
+  print("results")
+  print_header()
+  for r in res:
+    print_row(r)
+
+  print()
+   
+  print("mean")
+  print_header()
+  print_row(np.mean(res, axis=0))
+
+  print()
+
+  print("standard deviation")
+  print_header()
+  print_row(np.std(res, axis=0))
 
 """
-Results:
+prints:
 
-img 1
-standard: 0.2019127616233356
-fft: 0.2309030722492008
-dwt: 0.39531305096986324
-img 2
-standard: 0.21040045550961525
-fft: 0.21525820534448153
-dwt: 0.39549293335078034
-img 3
-standard: 0.220639825287268
-fft: 0.22977126352921437
-dwt: 0.31899602234009733
-img 4
-standard: 0.18546076348928414
-fft: 0.21728786053782784
-dwt: 0.31263225824068863
-img 5
-standard: 0.1975143954577983
-fft: 0.20376302301387392
-dwt: 0.3772254221203971
-img 6
-standard: 0.20049390732047445
-fft: 0.20532424952765443
-dwt: 0.2874949415019609
-img 7
-standard: 0.1961856152071466
-fft: 0.2260021570663824
-dwt: 0.35852858626437867
-img 8
-standard: 0.19539386965380873
-fft: 0.20988639338881374
-dwt: 0.32638964243640933
-img 9
-standard: 0.20624986138357143
-fft: 0.21604106970523126
-dwt: 0.2591676495291409
-img 10
-standard: 0.19186515690996164
-fft: 0.21452417606810967
-dwt: 0.28123594230635446
+0/10
+1/10
+2/10
+3/10
+4/10
+5/10
+6/10
+7/10
+8/10
+9/10
+results
+std|fft|dwt2
+0.201913|0.230903|0.395313
+0.210400|0.215258|0.395493
+0.220640|0.229771|0.318996
+0.185461|0.217288|0.312632
+0.197514|0.203763|0.377225
+0.200494|0.205324|0.287495
+0.196186|0.226002|0.358529
+0.195394|0.209886|0.326390
+0.206250|0.216041|0.259168
+0.191865|0.214524|0.281236
+
+mean
+std|fft|dwt2
+0.200612|0.216876|0.331248
+
+standard deviation
+std|fft|dwt2
+0.009449|0.008998|0.046067
 """
+
+
